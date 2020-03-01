@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>nenone-run</title>
+  <script type="text/javascript" src="script.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="page_left">
+    <div id="editor" style="height:600px;"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
+    <input type="submit" id="submit" value="RUN">
+  </div>
+  <div id="page_right">
+    <div class="test" id="test1">
+      <input type="checkbox" id="check1" checked="checked"><span class="theme">TEST 1</span><br>
+      <textarea class="input" id="input1" rows="5" spellcheck="false"></textarea><br>
+      <span class="note">STDOUT</span><br>
+      <textarea class="output" id="output1" rows="5" readonly spellcheck="false"></textarea>
+      <span class="note">STDERR</span><br>
+      <textarea class="error" id="error1" rows="5" readonly spellcheck="false"></textarea>
+    </div>
+    <div class="test" id="test2">
+      <input type="checkbox" id="check2"><span class="theme">TEST 2</span><br>
+      <textarea class="input input_disabled" id="input2" rows="5" spellcheck="false"></textarea><br>
+      <span class="note">STDOUT</span><br>
+      <textarea class="output" id="output2" rows="5" readonly spellcheck="false"></textarea>
+      <span class="note">STDERR</span><br>
+      <textarea class="error" id="error2" rows="5" readonly spellcheck="false"></textarea>
+
+    </div>
+    <div class="test" id="test3">
+      <input type="checkbox" id="check3"><span class="theme">TEST 3</span><br>
+      <textarea class="input input_disabled" id="input3" rows="5" spellcheck="false"></textarea><br>
+      <span class="note">STDOUT</span><br>
+      <textarea class="output" id="output3" rows="5" readonly spellcheck="false"></textarea>
+      <span class="note">STDERR</span><br>
+      <textarea class="error" id="error3" rows="5" readonly spellcheck="false"></textarea>
+
+    </div>
+  </div>
+  <script type="text/javascript">
+    let editor = ace.edit('editor');
+    editor.setTheme('ace/theme/monokai');
+    editor.getSession().setMode('ace/mode/c_cpp');
+    editor.$blockScrolling = Infinity;
+    editor.setOptions({
+      enableBasicAutocompletion: true,
+      enableSnippets: true,
+      enableLiveAutocompletion: true
+    });
+    elm('check1').onchange = function () {
+      if (!elm('check1').checked) {
+        elm('input1').classList.add('input_disabled');
+        elm('input1').readonly = true;
+      } else {
+        elm('input1').classList.remove('input_disabled');
+        elm('input1').readonly = false;
+      }
+    }
+    elm('check2').onchange = function () {
+      if (!elm('check2').checked) {
+        elm('input2').classList.add('input_disabled');
+        elm('input2').readonly = true;
+      } else {
+        elm('input2').classList.remove('input_disabled');
+        elm('input2').readonly = false;
+      }
+    }
+    elm('check3').onchange = function () {
+      if (!elm('check3').checked) {
+        elm('input3').classList.add('input_disabled');
+        elm('input3').readonly = true;
+      } else {
+        elm('input3').classList.remove('input_disabled');
+        elm('input3').readonly = false;
+      }
+    }
+    elm('submit').onclick = function () {
+      if (elm('check1').checked) {
+        elm('output1').value = "running...";
+        elm('error1').value = "running...";
+        ajax('https://1d878d9b.us-south.apigw.appdomain.cloud/nenone-run',
+          { 'code': editor.getValue(), 'input': elm('input1').value },
+          function (data) {
+            elm('output1').value = data.output;
+            elm('error1').value = data.stderr;
+          });
+      } if (elm('check2').checked) {
+        elm('output2').value = "running...";
+        elm('error2').value = "running...";
+        ajax('https://1d878d9b.us-south.apigw.appdomain.cloud/nenone-run',
+          { 'code': editor.getValue(), 'input': elm('input2').value },
+          function (data) {
+            elm('output2').value = data.output;
+            elm('error2').value = data.stderr;
+          });
+      } if (elm('check3').checked) {
+        elm('output3').value = "running...";
+        elm('error3').value = "running...";
+        ajax('https://1d878d9b.us-south.apigw.appdomain.cloud/nenone-run',
+          { 'code': editor.getValue(), 'input': elm('input3').value },
+          function (data) {
+            elm('output3').value = data.output;
+            elm('error3').value = data.stderr;
+          });
+      }
+    }
+
+  </script>
+</body>
+
+</html>
