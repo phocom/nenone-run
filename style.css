@@ -82,3 +82,10 @@ input[type=checkbox]{
   margin: 4px;
   font-weight: bold;
 }
+
+#lang{
+  border-radius: 4px;
+  background: #3f3f3f;
+  color:#ffffff;
+  margin: 4px;
+}
