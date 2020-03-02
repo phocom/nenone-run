@@ -12,8 +12,12 @@
   <div id="page_left">
     <select id="lang">
       <option value="cpp14">C++14</option>
+      <option value="c">C</option>
+      <option value="java">Java8</option>
       <option value="ruby">Ruby2.3</option>
       <option value="python">Python3.5</option>
+      <option value="perl">Perl</option>
+      <option value="rust">Rust</option>
     </select>
     <div id="editor" style="height:600px;"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
@@ -21,30 +25,82 @@
   </div>
   <div id="page_right">
     <div class="test" id="test1">
-      <input type="checkbox" id="check1" checked="checked"><span class="theme">TEST 1</span><br>
-      <textarea class="input" id="input1" rows="5" spellcheck="false"></textarea><br>
-      <span class="note">STDOUT</span><br>
-      <textarea class="output" id="output1" rows="5" readonly spellcheck="false"></textarea>
-      <span class="note">STDERR</span><br>
-      <textarea class="error" id="error1" rows="5" readonly spellcheck="false"></textarea>
+      <table class="test_table">
+        <tr>
+          <td><input type="checkbox" id="check1" checked="checked"><span class="theme">TEST 1</span></td>
+          <td align="right"><input type="text" id="time1" class="time" readonly>ms</td>
+          <td align="right"><input type="text" id="memory1" class="memory" readonly>KB</td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <textarea class="input" id="input1" rows="5" spellcheck="false"></textarea></td>
+        </tr>
+        <tr>
+          <td colspan="3"><span class="note">STDOUT</span></td>
+        </tr>
+        <tr>
+          <td colspan="3"><textarea class="output" id="output1" rows="5" readonly spellcheck="false"></textarea></td>
+        </tr>
+        <tr>
+          <td colspan="3"><span class="note">STDERR</span></td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <textarea class="error" id="error1" rows="5" readonly spellcheck="false"></textarea></td>
+        </tr>
+      </table>
     </div>
     <div class="test" id="test2">
-      <input type="checkbox" id="check2"><span class="theme">TEST 2</span><br>
-      <textarea class="input input_disabled" id="input2" rows="5" spellcheck="false"></textarea><br>
-      <span class="note">STDOUT</span><br>
-      <textarea class="output" id="output2" rows="5" readonly spellcheck="false"></textarea>
-      <span class="note">STDERR</span><br>
-      <textarea class="error" id="error2" rows="5" readonly spellcheck="false"></textarea>
-
+      <table class="test_table">
+        <tr>
+          <td><input type="checkbox" id="check2" checked="checked"><span class="theme">TEST 2</span></td>
+          <td align="right"><input type="text" id="time2" class="time" readonly>ms</td>
+          <td align="right"><input type="text" id="memory2" class="memory" readonly>KB</td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <textarea class="input" id="input2" rows="5" spellcheck="false"></textarea></td>
+        </tr>
+        <tr>
+          <td colspan="3"><span class="note">STDOUT</span></td>
+        </tr>
+        <tr>
+          <td colspan="3"><textarea class="output" id="output2" rows="5" readonly spellcheck="false"></textarea></td>
+        </tr>
+        <tr>
+          <td colspan="3"><span class="note">STDERR</span></td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <textarea class="error" id="error2" rows="5" readonly spellcheck="false"></textarea></td>
+        </tr>
+      </table>
     </div>
     <div class="test" id="test3">
-      <input type="checkbox" id="check3"><span class="theme">TEST 3</span><br>
-      <textarea class="input input_disabled" id="input3" rows="5" spellcheck="false"></textarea><br>
-      <span class="note">STDOUT</span><br>
-      <textarea class="output" id="output3" rows="5" readonly spellcheck="false"></textarea>
-      <span class="note">STDERR</span><br>
-      <textarea class="error" id="error3" rows="5" readonly spellcheck="false"></textarea>
-
+      <table class="test_table">
+        <tr>
+          <td><input type="checkbox" id="check3" checked="checked"><span class="theme">TEST 3</span></td>
+          <td align="right"><input type="text" id="time3" class="time" readonly>ms</td>
+          <td align="right"><input type="text" id="memory3" class="memory" readonly>KB</td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <textarea class="input" id="input3" rows="5" spellcheck="false"></textarea></td>
+        </tr>
+        <tr>
+          <td colspan="3"><span class="note">STDOUT</span></td>
+        </tr>
+        <tr>
+          <td colspan="3"><textarea class="output" id="output3" rows="5" readonly spellcheck="false"></textarea></td>
+        </tr>
+        <tr>
+          <td colspan="3"><span class="note">STDERR</span></td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <textarea class="error" id="error3" rows="5" readonly spellcheck="false"></textarea></td>
+        </tr>
+      </table>
     </div>
   </div>
   <script type="text/javascript">
@@ -84,7 +140,10 @@
         elm('input3').readonly = false;
       }
     }
-    const langs = { 'cpp14': 'c_cpp', 'ruby': 'ruby', 'python': 'python' };
+    const langs = {
+      'cpp14': 'c_cpp', 'c': 'c_cpp', 'ruby': 'ruby', 'python': 'python',
+      'java': 'java', 'perl': 'perl', 'rust': 'rust'
+    };
     elm('lang').onchange = function () {
       let lang = elm('lang').value;
       editor.getSession().setMode("ace/mode/" + langs[lang]);
@@ -97,8 +156,11 @@
         ajax('https://1d878d9b.us-south.apigw.appdomain.cloud/nenone-run',
           { 'code': editor.getValue(), 'stdin': elm('input1').value, 'lang': lang },
           function (data) {
+            console.log(data);
             elm('output1').value = data.stdout;
             elm('error1').value = data.stderr;
+            elm('time1').value = data.time;
+            elm('memory1').value = data.memory;
           });
       } if (elm('check2').checked) {
         elm('output2').value = "running...";
@@ -108,6 +170,9 @@
           function (data) {
             elm('output2').value = data.stdout;
             elm('error2').value = data.stderr;
+            elm('time2').value = data.time;
+            elm('memory2').value = data.memory;
+
           });
       } if (elm('check3').checked) {
         elm('output3').value = "running...";
@@ -117,6 +182,8 @@
           function (data) {
             elm('output3').value = data.stdout;
             elm('error3').value = data.stderr;
+            elm('time3').value = data.time;
+            elm('memory3').value = data.memory;
           });
       }
     }

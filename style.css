@@ -44,7 +44,7 @@ body{
 }
 
 .input{
-  width:90%;
+  width:100%;
   padding: 0.5em;
   border-radius: 4px;
   font-size: 14px;
@@ -55,7 +55,7 @@ body{
 }
 
 .output{
-  width:90%;
+  width:100%;
   background: #cfcfcf;
   padding: 0.5em;
   border-radius: 4px;
@@ -63,7 +63,7 @@ body{
 }
 
 .error{
-  width:90%;
+  width:100%;
   background: #cfcfcf; 
   padding: 0.5em;
   border-radius: 4px;
@@ -88,4 +88,23 @@ input[type=checkbox]{
   background: #3f3f3f;
   color:#ffffff;
   margin: 4px;
+}
+
+.test_table{
+  width: 95%;
+  table-layout: fixed;
+}
+
+.time{
+  width: 60px;
+  border-radius: 4px;
+  background: #cfcfcf;
+  text-align: right;
+}
+
+.memory{
+  width: 60px;
+  border-radius: 4px;
+  background: #cfcfcf;
+  text-align: right;
 }
