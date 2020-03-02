@@ -10,6 +10,11 @@
 
 <body>
   <div id="page_left">
+    <select id="lang">
+      <option value="cpp14">C++14</option>
+      <option value="ruby">Ruby2.3</option>
+      <option value="python">Python3.5</option>
+    </select>
     <div id="editor" style="height:600px;"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
     <input type="submit" id="submit" value="RUN">
@@ -79,32 +84,38 @@
         elm('input3').readonly = false;
       }
     }
+    const langs = { 'cpp14': 'c_cpp', 'ruby': 'ruby', 'python': 'python' };
+    elm('lang').onchange = function () {
+      let lang = elm('lang').value;
+      editor.getSession().setMode("ace/mode/" + langs[lang]);
+    }
     elm('submit').onclick = function () {
+      let lang = elm('lang').value;
       if (elm('check1').checked) {
         elm('output1').value = "running...";
         elm('error1').value = "running...";
         ajax('https://1d878d9b.us-south.apigw.appdomain.cloud/nenone-run',
-          { 'code': editor.getValue(), 'input': elm('input1').value },
+          { 'code': editor.getValue(), 'stdin': elm('input1').value, 'lang': lang },
           function (data) {
-            elm('output1').value = data.output;
+            elm('output1').value = data.stdout;
             elm('error1').value = data.stderr;
           });
       } if (elm('check2').checked) {
         elm('output2').value = "running...";
         elm('error2').value = "running...";
         ajax('https://1d878d9b.us-south.apigw.appdomain.cloud/nenone-run',
-          { 'code': editor.getValue(), 'input': elm('input2').value },
+          { 'code': editor.getValue(), 'stdin': elm('input2').value, 'lang': lang },
           function (data) {
-            elm('output2').value = data.output;
+            elm('output2').value = data.stdout;
             elm('error2').value = data.stderr;
           });
       } if (elm('check3').checked) {
         elm('output3').value = "running...";
         elm('error3').value = "running...";
         ajax('https://1d878d9b.us-south.apigw.appdomain.cloud/nenone-run',
-          { 'code': editor.getValue(), 'input': elm('input3').value },
+          { 'code': editor.getValue(), 'stdin': elm('input3').value, 'lang': lang },
           function (data) {
-            elm('output3').value = data.output;
+            elm('output3').value = data.stdout;
             elm('error3').value = data.stderr;
           });
       }
