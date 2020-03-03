@@ -31,76 +31,62 @@
           <td align="right"><input type="text" id="time1" class="time" readonly>ms</td>
           <td align="right"><input type="text" id="memory1" class="memory" readonly>KB</td>
         </tr>
-        <tr>
-          <td colspan="3">
-            <textarea class="input" id="input1" rows="5" spellcheck="false"></textarea></td>
-        </tr>
-        <tr>
-          <td colspan="3"><span class="note">STDOUT</span></td>
-        </tr>
-        <tr>
-          <td colspan="3"><textarea class="output" id="output1" rows="5" readonly spellcheck="false"></textarea></td>
-        </tr>
-        <tr>
-          <td colspan="3"><span class="note">STDERR</span></td>
-        </tr>
-        <tr>
-          <td colspan="3">
-            <textarea class="error" id="error1" rows="5" readonly spellcheck="false"></textarea></td>
-        </tr>
       </table>
+      <div id="test_pad1" class="test_pad">
+        <textarea class="input" id="input1" rows="5" spellcheck="false"></textarea>
+        <span class="note">STDOUT</span>
+        <textarea class="output" id="output1" rows="5" readonly spellcheck="false"></textarea>
+        <span class="note">STDERR</span>
+        <textarea class="error" id="error1" rows="5" readonly spellcheck="false"></textarea>
+      </div>
     </div>
     <div class="test" id="test2">
       <table class="test_table">
         <tr>
-          <td><input type="checkbox" id="check2" checked="checked"><span class="theme">TEST 2</span></td>
+          <td><input type="checkbox" id="check2"><span class="theme">TEST 2</span></td>
           <td align="right"><input type="text" id="time2" class="time" readonly>ms</td>
           <td align="right"><input type="text" id="memory2" class="memory" readonly>KB</td>
         </tr>
-        <tr>
-          <td colspan="3">
-            <textarea class="input" id="input2" rows="5" spellcheck="false"></textarea></td>
-        </tr>
-        <tr>
-          <td colspan="3"><span class="note">STDOUT</span></td>
-        </tr>
-        <tr>
-          <td colspan="3"><textarea class="output" id="output2" rows="5" readonly spellcheck="false"></textarea></td>
-        </tr>
-        <tr>
-          <td colspan="3"><span class="note">STDERR</span></td>
-        </tr>
-        <tr>
-          <td colspan="3">
-            <textarea class="error" id="error2" rows="5" readonly spellcheck="false"></textarea></td>
-        </tr>
       </table>
+      <div id="test_pad2" class="test_pad">
+        <textarea class="input" id="input2" rows="5" spellcheck="false"></textarea>
+        <span class="note">STDOUT</span>
+        <textarea class="output" id="output2" rows="5" readonly spellcheck="false"></textarea>
+        <span class="note">STDERR</span>
+        <textarea class="error" id="error2" rows="5" readonly spellcheck="false"></textarea>
+      </div>
     </div>
     <div class="test" id="test3">
       <table class="test_table">
         <tr>
-          <td><input type="checkbox" id="check3" checked="checked"><span class="theme">TEST 3</span></td>
+          <td><input type="checkbox" id="check3"><span class="theme">TEST 3</span></td>
           <td align="right"><input type="text" id="time3" class="time" readonly>ms</td>
           <td align="right"><input type="text" id="memory3" class="memory" readonly>KB</td>
         </tr>
+      </table>
+      <div id="test_pad3" class="test_pad">
+        <textarea class="input" id="input3" rows="5" spellcheck="false"></textarea>
+        <span class="note">STDOUT</span>
+        <textarea class="output" id="output3" rows="5" readonly spellcheck="false"></textarea>
+        <span class="note">STDERR</span>
+        <textarea class="error" id="error3" rows="5" readonly spellcheck="false"></textarea>
+      </div>
+    </div>
+    <div class="test" id="test4">
+      <table class="test_table">
         <tr>
-          <td colspan="3">
-            <textarea class="input" id="input3" rows="5" spellcheck="false"></textarea></td>
-        </tr>
-        <tr>
-          <td colspan="3"><span class="note">STDOUT</span></td>
-        </tr>
-        <tr>
-          <td colspan="3"><textarea class="output" id="output3" rows="5" readonly spellcheck="false"></textarea></td>
-        </tr>
-        <tr>
-          <td colspan="3"><span class="note">STDERR</span></td>
-        </tr>
-        <tr>
-          <td colspan="3">
-            <textarea class="error" id="error3" rows="5" readonly spellcheck="false"></textarea></td>
+          <td><input type="checkbox" id="check4"><span class="theme">TEST 4</span></td>
+          <td align="right"><input type="text" id="time4" class="time" readonly>ms</td>
+          <td align="right"><input type="text" id="memory4" class="memory" readonly>KB</td>
         </tr>
       </table>
+      <div id="test_pad4" class="test_pad">
+        <textarea class="input" id="input4" rows="5" spellcheck="false"></textarea>
+        <span class="note">STDOUT</span>
+        <textarea class="output" id="output4" rows="5" readonly spellcheck="false"></textarea>
+        <span class="note">STDERR</span>
+        <textarea class="error" id="error4" rows="5" readonly spellcheck="false"></textarea>
+      </div>
     </div>
   </div>
   <script type="text/javascript">
@@ -113,32 +99,16 @@
       enableSnippets: true,
       enableLiveAutocompletion: true
     });
-    elm('check1').onchange = function () {
-      if (!elm('check1').checked) {
-        elm('input1').classList.add('input_disabled');
-        elm('input1').readonly = true;
-      } else {
-        elm('input1').classList.remove('input_disabled');
-        elm('input1').readonly = false;
+    for (let i = 1; i <= 4; ++i) {
+      let stri = String(i);
+      elm('check' + stri).onchange = function () {
+        if (!elm('check' + stri).checked) {
+          elm('test_pad' + stri).classList.add('hide');
+        } else {
+          elm('test_pad' + stri).classList.remove('hide');
+        }
       }
-    }
-    elm('check2').onchange = function () {
-      if (!elm('check2').checked) {
-        elm('input2').classList.add('input_disabled');
-        elm('input2').readonly = true;
-      } else {
-        elm('input2').classList.remove('input_disabled');
-        elm('input2').readonly = false;
-      }
-    }
-    elm('check3').onchange = function () {
-      if (!elm('check3').checked) {
-        elm('input3').classList.add('input_disabled');
-        elm('input3').readonly = true;
-      } else {
-        elm('input3').classList.remove('input_disabled');
-        elm('input3').readonly = false;
-      }
+      elm('check' + stri).onchange();
     }
     const langs = {
       'cpp14': 'c_cpp', 'c': 'c_cpp', 'ruby': 'ruby', 'python': 'python',
@@ -150,41 +120,22 @@
     }
     elm('submit').onclick = function () {
       let lang = elm('lang').value;
-      if (elm('check1').checked) {
-        elm('output1').value = "running...";
-        elm('error1').value = "running...";
-        ajax('https://1d878d9b.us-south.apigw.appdomain.cloud/nenone-run',
-          { 'code': editor.getValue(), 'stdin': elm('input1').value, 'lang': lang },
-          function (data) {
-            console.log(data);
-            elm('output1').value = data.stdout;
-            elm('error1').value = data.stderr;
-            elm('time1').value = data.time;
-            elm('memory1').value = data.memory;
-          });
-      } if (elm('check2').checked) {
-        elm('output2').value = "running...";
-        elm('error2').value = "running...";
-        ajax('https://1d878d9b.us-south.apigw.appdomain.cloud/nenone-run',
-          { 'code': editor.getValue(), 'stdin': elm('input2').value, 'lang': lang },
-          function (data) {
-            elm('output2').value = data.stdout;
-            elm('error2').value = data.stderr;
-            elm('time2').value = data.time;
-            elm('memory2').value = data.memory;
-
-          });
-      } if (elm('check3').checked) {
-        elm('output3').value = "running...";
-        elm('error3').value = "running...";
-        ajax('https://1d878d9b.us-south.apigw.appdomain.cloud/nenone-run',
-          { 'code': editor.getValue(), 'stdin': elm('input3').value, 'lang': lang },
-          function (data) {
-            elm('output3').value = data.stdout;
-            elm('error3').value = data.stderr;
-            elm('time3').value = data.time;
-            elm('memory3').value = data.memory;
-          });
+      for (let i = 1; i <= 4; ++i) {
+        let stri = String(i);
+        if (elm('check' + stri).checked) {
+          elm('output' + stri).value = "running...";
+          elm('error' + stri).value = "running...";
+          elm('time' + stri).value = "";
+          elm('memory' + stri).value = "";
+          ajax('https://1d878d9b.us-south.apigw.appdomain.cloud/nenone-run',
+            { 'code': editor.getValue(), 'stdin': elm('input' + stri).value, 'lang': lang },
+            function (data) {
+              elm('output' + stri).value = data.stdout;
+              elm('error' + stri).value = data.stderr;
+              elm('time' + stri).value = data.time;
+              elm('memory' + stri).value = data.memory;
+            });
+        }
       }
     }
 
