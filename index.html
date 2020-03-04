@@ -130,7 +130,7 @@
           ajax('https://1d878d9b.us-south.apigw.appdomain.cloud/nenone-run',
             { 'code': editor.getValue(), 'stdin': elm('input' + stri).value, 'lang': lang },
             function (data) {
-              if (data.time) {
+              if (data.time != -1) {
                 elm('output' + stri).value = data.stdout;
                 elm('error' + stri).value = data.stderr;
                 elm('time' + stri).value = data.time;
